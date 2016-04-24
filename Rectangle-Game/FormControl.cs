@@ -5,11 +5,13 @@ using System.Drawing;
 
 namespace RectangleGame
 {
+	/// <summary>
+	/// Class controlling form properties.
+	/// </summary>
 	public class FormControl
 	{
-		//Klasse zum Kontrollieren von Formulareigenschaften
+		/**** Variabales ****/
 
-		//Variablen und Konstanten werden deklariert/definert
 		private const int SW_HIDE = 0;
 		private const int SW_SHOW = 1;
 		private const int SM_SCREENX = 0;
@@ -23,46 +25,58 @@ namespace RectangleGame
 		private bool Maximized;
 		private Rectangle Bounds;
 
+		/**** Functions ****/
 
+		/// <summary>
+		/// Constructs the controller for a given form.
+		/// </summary>
+		/// <param name="TargetForm">The form to be controled.</param>
 		public FormControl(Form TargetForm)
 		{
 			this.TargetForm = TargetForm;
 		}
 
-		//Benötigte Methoden zur Formularkontrolle werden eingebunden und definiert
+		// Including and defining methods necessary to interact with the form.
 		[DllImport("user32.dll", EntryPoint = "GetSystemMetrics")]
 		private static extern int GetSystemMetrics(int smIndex);
 		[DllImport("user32.dll")]
 		private static extern void SetWindowPos(IntPtr hwnd, IntPtr hwndInsertAfter, int X, int Y, int width, int height, uint flags);
 
 
-		//Eigene Methoden werden definiert
+		/// <summary>
+		/// Returns the width of the main screen in pixels.
+		/// </summary>
+		/// <returns>Screenwidth in pixels.</returns>
 		public static int GetScreenWidth()
 		{
-			//Gibt die Breite des Hauptbildschirmes in Pixeln zurück
 			return GetSystemMetrics(SM_SCREENX);
 		}
 
-
+		/// <summary>
+		/// Returns the height of the main screen in pixels.
+		/// </summary>
+		/// <returns>Screenheight in pixels.</returns>
 		public static int GetScreenHeight()
 		{
-			//Gibt die Höhe des Hauptbildschirmes in Pixeln zurück
 			return GetSystemMetrics(SM_SCREENY);
 		}
 
-
+		/// <summary>
+		/// Saves the current configuration of the given form.
+		/// </summary>
 		private void SaveFormState()
 		{
-			//Speichert die aktuelle Konfiguration des angegebenen Formulars
 			BorderStyle = TargetForm.FormBorderStyle;
 			WindowState = TargetForm.WindowState;
 			Bounds = TargetForm.Bounds;
 			TopMost = TargetForm.TopMost;
 		}
 
+		/// <summary>
+		/// Configures the given form like the previously saved one.
+		/// </summary>
 		public void RestoreForm()
 		{
-			//Konfiguriert das angegebene Formular wie das zuletzt gespeicherte
 			if (Maximized == true)
 			{
 				TargetForm.FormBorderStyle = BorderStyle;
@@ -73,9 +87,11 @@ namespace RectangleGame
 			}
 		}
 
+		/// <summary>
+		/// Activates fullscreen mode for the given form.
+		/// </summary>
 		public void MaximizeForm()
 		{
-			//Zeigt das angegebene Formular im Vollbildmodus an
 			if (Maximized == false)
 			{
 				Maximized = true;
@@ -90,7 +106,7 @@ namespace RectangleGame
 }
 
 /*
- * Weiterführende Informationen zu SystemMetrics:
+ * Additional info regarding SystemMetrics can be found at:
  * http://pinvoke.net/default.aspx/Enums.SystemMetric
  * 
 */
