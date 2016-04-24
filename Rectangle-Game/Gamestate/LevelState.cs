@@ -53,7 +53,16 @@ namespace RectangleGame.Gamestate
 			Layout.Textbox timer = new Layout.Textbox("timer");
 			timer.parent = statusBox;
 			timer.percentageY = 5;
-			timer.anchor = Layout.Anchor.CenterX;
+			timer.anchor = Layout.Anchor.Right;
+			timer.borderLine = Pens.Transparent;
+			Layout.Textbox timerLabel = new Layout.Textbox("timerLabel");
+			timerLabel.parent = statusBox;
+			timerLabel.percentageY = 5;
+			timerLabel.anchor = Layout.Anchor.Left;
+			timerLabel.borderLine = Pens.Transparent;
+			timerLabel.fill = Brushes.Transparent;
+			timerLabel.text = "Time:";
+#warning Stopped here whilst adjusting the infobox on the rightof the screen
 
 			Layout.Textbox shotCounter = new Layout.Textbox("shotCounter");
 			shotCounter.parent = statusBox;
@@ -76,9 +85,13 @@ namespace RectangleGame.Gamestate
 			// Adding boxes to layout.
 			layout.AddBox(statusBox);
 			layout.AddBox(timer);
+			layout.AddBox(timerLabel);
 			layout.AddBox(shotCounter);
+			//layout.AddBox(shotCounterLabel);
 			layout.AddBox(enemyCounter);
+			//layout.AddBox(enemyCounterLabel);
 			layout.AddBox(scoreCounter);
+			//layout.AddBox(scoreCounterLabel);
 
 			// Already setting up victory dialogue.
 #warning You may not set the relative position after setting the anchor or every child box will not show up correctly

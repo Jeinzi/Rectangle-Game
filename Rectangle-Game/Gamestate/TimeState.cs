@@ -34,7 +34,10 @@
 		{
 			base.Update();
 
-			// If there's no entity left, stop game and insert into database
+			UpdateScore();
+			((Layout.Textbox)layout.GetBox("scoreCounter")).text = score.ToString();
+
+			// If there's no entity left, stop game and insert into database.
 			if (entities.Count == 0 && shots > 0 && !victory)
 			{
 				SFXPlayer.Play(Sound.Death);
@@ -44,12 +47,20 @@
 				
 				victory = true;
 				stopwatch.Stop();
-				score = (int)(10000000 * ((float)hits / (float)shots) / (float)stopwatch.ElapsedMilliseconds);
+				UpdateScore();
 			}
-			else
+		}
+
+		/// <summary>
+		/// Calculates the score and updates the score variable.
+		/// The score starts at one million and decreases hyperbolical with time.
+		/// </summary>
+		private void UpdateScore()
+		{
+			score = ((int)(10000000 * ((float)hits / (float)shots) / (float)stopwatch.ElapsedMilliseconds));
+			if (hits == 0)
 			{
-				score = (int)(10000000 * ((float)hits / (float)shots) / (float)stopwatch.ElapsedMilliseconds);
-				((Layout.Textbox)layout.GetBox("scoreCounter")).text = score.ToString();
+				score = 10000000;
 			}
 		}
 

@@ -74,8 +74,12 @@ namespace RectangleGame.Gamestate
 			if (random.Next(0, (int)(60 / difficulty)) == 0)
 			{
 				Entity.Entity entity = GetRandomEntity();
-				Entity.RushEntity rushEntity = new Entity.RushEntity(entity.rectangle, entity.brush, rushMap);
-				entities.Add(rushEntity);
+				// If the random entity does not intersect with the base, it is finally created.
+				if(!entity.rectangle.IntersectsWith(rushMap.playerBase.rectangle))
+				{
+					Entity.RushEntity rushEntity = new Entity.RushEntity(entity.rectangle, entity.brush, rushMap);
+					entities.Add(rushEntity);
+				}
 			}
 
 			// Base is updated.
