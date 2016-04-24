@@ -32,7 +32,10 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Executed, when a key is beeing pressed
+		/// <summary>
+		/// Executed when a key is pressed.
+		/// </summary>
+		/// <param name="e"></param>
 		public override void KeyPressed(KeyEventArgs e)
 		{
 			base.KeyPressed(e);

@@ -100,7 +100,10 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Drawing all the content to the given graphics object.
+		/// <summary>
+		/// Draws all the content to the given graphics object.
+		/// </summary>
+		/// <param name="g">The graphics object in question.</param>
 		public override void Draw(Graphics g)
 		{
 			base.Draw(g);

@@ -3,7 +3,7 @@
 namespace RectangleGame.Gamestate
 {
 	/// <summary>
-	/// Quits the application in initialisation.
+	/// Quits the application on initialisation.
 	/// </summary>
 	class QuitState : GameState
 	{
@@ -12,6 +12,9 @@ namespace RectangleGame.Gamestate
 			this.gameStateManager = gameStateManager;
 		}
 
+		/// <summary>
+		/// Closes the application.
+		/// </summary>
 		public override void Init() { Application.Exit(); }
 	}
 }

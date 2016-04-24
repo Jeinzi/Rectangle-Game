@@ -23,10 +23,10 @@ namespace RectangleGame.Gamestate
 			timeRows = new List<string>();
 			rushRows = new List<string>();
 
-			// Creating layout
+			// Creating layout.
 			layout = new Layout.Layout();
 
-			// Vertical division
+			// Vertical division.
 			Layout.Box upperBox = new Layout.Box("upperBox");
 			upperBox.percentageSize = new SizeF(100, 20);
 			upperBox.visible = false;
@@ -36,7 +36,7 @@ namespace RectangleGame.Gamestate
 			lowerBox.location = new Point(0, (int)((float)lowerBox.parent.height / 10 * 2));
 			lowerBox.visible = false;
 
-			// Horizontal division
+			// Horizontal division.
 			Layout.Box leftBox = new Layout.Box("leftBox");
 			leftBox.parent = lowerBox;
 			leftBox.percentageSize = new SizeF((float)33.3, 100);
@@ -55,7 +55,7 @@ namespace RectangleGame.Gamestate
 			rightBox.anchor = Layout.Anchor.Right | Layout.Anchor.Top;
 			rightBox.visible = false;
 
-			// Lists
+			// Lists.
 			Layout.Textbox caption = new Layout.Textbox("caption");
 			caption.borderLine = new Pen(Brushes.Black, 3);
 			caption.font = new Font("ARIAL", 60);
@@ -77,7 +77,7 @@ namespace RectangleGame.Gamestate
 			centerList.height = 400;
 			centerList.anchor = Layout.Anchor.CenterX;
 
-			// Captions
+			// Captions.
 			Layout.Textbox leftCaption = new Layout.Textbox("leftCaption");
 			leftCaption.parent = leftBox;
 			leftCaption.text = "Time mode:";
@@ -88,7 +88,7 @@ namespace RectangleGame.Gamestate
 			centerCaption.text = "Rush mode:";
 			centerCaption.x = centerList.x;
 
-			// Adding all to layout
+			// Adding all to layout.
 			layout.AddBox(upperBox);
 			layout.AddBox(lowerBox);
 
@@ -105,14 +105,16 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Executed every time the gamestate is activated
+		/// <summary>
+		/// Executed every time the gamestate is activated.
+		/// </summary>
 		public override void Init()
 		{
 			base.Init();
 			timeRows.Clear();
 			rushRows.Clear();
 
-			// Reading data to check correct execution
+			// Reading data to check correct execution.
 			int i = 0;
 			string query = "select * from timeState order by score desc";
 			SQLiteDataReader reader = Database.GetReader(query);
@@ -135,7 +137,10 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Drawing all the content to the given graphics object
+		/// <summary>
+		/// Draws all the content to the given graphics object.
+		/// </summary>
+		/// <param name="g">The graphics object in question.</param>
 		public override void Draw(Graphics g)
 		{
 			base.Draw(g);
@@ -160,7 +165,10 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Executed, when a key is beeing pressed
+		/// <summary>
+		/// Executed when a key is pressed.
+		/// </summary>
+		/// <param name="e"></param>
 		public override void KeyPressed(KeyEventArgs e)
 		{
 			base.KeyPressed(e);

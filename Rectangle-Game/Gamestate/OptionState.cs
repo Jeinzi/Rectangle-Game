@@ -7,12 +7,11 @@ namespace RectangleGame.Gamestate
 	{
 		/******** Variables ********/
 
-
-
-
+		
+		
+		
 		/******** Functions ********/
 
-		// Constructor
 		public OptionState(GameStateManager gameStateManager)
 		{
 			this.gameStateManager = gameStateManager;
@@ -26,6 +25,7 @@ namespace RectangleGame.Gamestate
 			box.textAnchor = Layout.Anchor.Top | Layout.Anchor.CenterX;
 			box.OnDelimiterEntered += onEnter;
 			box.padding = 20;
+			box.text = "~ Nothing here ~";
 			//box.allowMultiline = false;
 
 			layout.AddBox(box);
@@ -36,13 +36,20 @@ namespace RectangleGame.Gamestate
 			MessageBox.Show(e.text);
 		}
 
+		/// <summary>
+		/// Draws all the content to the given graphics object.
+		/// </summary>
+		/// <param name="g">The graphics object in question.</param>
 		public override void Draw(Graphics g)
 		{
 			base.Draw(g);
 		}
 
-		
-		// Executed, when a key is beeing pressed
+
+		/// <summary>
+		/// Executed when a key is pressed.
+		/// </summary>
+		/// <param name="e"></param>
 		public override void KeyPressed(KeyEventArgs e)
 		{
 			base.KeyPressed(e);

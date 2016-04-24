@@ -162,7 +162,7 @@ namespace RectangleGame.Gamestate
 		/// <summary>
 		/// Draws all the content to the given graphics object.
 		/// </summary>
-		/// <param name="g"></param>
+		/// <param name="g">The graphics object in question.</param>
 		public override void Draw(Graphics g)
 		{
 			// Drawing all the objects.

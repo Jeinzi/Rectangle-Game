@@ -13,12 +13,11 @@ namespace RectangleGame.Gamestate
 
 		/******** Functions ********/
 
-		// Constructor
 		public MenuState(GameStateManager gameStateManager)
 		{
 			this.gameStateManager = gameStateManager;
 
-			// Creating Layout
+			// Creating Layout.
 			Layout.Textbox caption = new Layout.Textbox("caption");
 			caption.text = "Rectangles";
 			caption.font = new Font("ARIAL", 90);
@@ -34,7 +33,7 @@ namespace RectangleGame.Gamestate
 			layout.AddBox(caption);
 			layout.AddBox(optionBox);
 
-			// Creating options within the main menu
+			// Creating options within the main menu.
 			options = new List<Option>();
 			options.Add(new Option("Fight against the time!", GameStateManager.State.Time));
 			options.Add(new Option("Rush Mode", GameStateManager.State.Rush));
@@ -46,7 +45,10 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Drawing all the content to the given graphics object
+		/// <summary>
+		/// Draws all the content to the given graphics object.
+		/// </summary>
+		/// <param name="g">The graphics object in question.</param>
 		public override void Draw(Graphics g)
 		{
 			base.Draw(g);
@@ -70,7 +72,10 @@ namespace RectangleGame.Gamestate
 		}
 
 
-		// Executed, when a key is beeing pressed
+		/// <summary>
+		/// Executed when a key is pressed.
+		/// </summary>
+		/// <param name="e"></param>
 		public override void KeyPressed(KeyEventArgs e)
 		{
 			base.KeyPressed(e);
@@ -108,7 +113,9 @@ namespace RectangleGame.Gamestate
 	}
 
 
-	// Class representing the different options and the matching gamestates within the main menu
+	/// <summary>
+	/// Class representing the different options and the matching gamestates within the main menu.
+	/// </summary>
 	class Option
 	{
 		private string title;

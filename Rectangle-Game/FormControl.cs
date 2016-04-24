@@ -10,7 +10,7 @@ namespace RectangleGame
 	/// </summary>
 	public class FormControl
 	{
-		/**** Variabales ****/
+		/**** Variables ****/
 
 		private const int SW_HIDE = 0;
 		private const int SW_SHOW = 1;
