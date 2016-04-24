@@ -6,12 +6,12 @@ namespace Plopper
 	static class Program
 	{
 		/// <summary>
-		/// The form that is used by the application
+		/// The form that is used by the application.
 		/// </summary>
 		public static Form1 mainForm;
 
 		/// <summary>
-		/// Der Haupteinstiegspunkt für die Anwendung.
+		/// The main entry point of the application.
 		/// </summary>
 		[STAThread]
 		static void Main()

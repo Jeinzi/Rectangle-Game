@@ -4,14 +4,14 @@ namespace Plopper
 {
 	/// <summary>
 	/// Class used to play short sound effects.
-	/// No object can be instantiated, only the static Play-Method can be called with a certain sound.
+	/// No object can be instantiated, only the static Play-method can be called for a certain sound.
 	/// </summary>
 	public abstract class SFXPlayer
 	{
 		/// <summary>
 		/// Plays a Plopper.Sound.
 		/// </summary>
-		/// <param name="sound">A Plopper.Sound objects.</param>
+		/// <param name="sound">A Plopper.Sound object.</param>
 		public static void Play(Sound sound)
 		{
 			SoundPlayer soundPlayer = new SoundPlayer();
@@ -68,6 +68,9 @@ namespace Plopper
 		}
 	}
 
+	/// <summary>
+	/// Enumerator encapsulating the available sounds into a distict datatype.
+	/// </summary>
 	public enum Sound
 	{
 		Menu_Toggle,

@@ -6,9 +6,9 @@ namespace Plopper.Gamestate
 	class RushState : LevelState
 	{
 		/******** Variables ********/
+
 		private double difficulty;
 		private Map.RushMap rushMap;
-
 		private Layout.Bar healthBar;
 		private Layout.Textbox difficultyBox;
 
@@ -20,7 +20,7 @@ namespace Plopper.Gamestate
 			rushMap = new Map.RushMap(map.size.Width, map.size.Height);
 			difficulty = 30;
 
-			// Health bar
+			// Health bar.
 			healthBar = new Layout.Bar("healthBar");
 			healthBar.maxValue = rushMap.playerBase.health;
 			healthBar.percentFull = 100;
@@ -33,7 +33,7 @@ namespace Plopper.Gamestate
 			healthBar.padding = 1;
 			healthBar.borderLine.Width = 3;
 
-			// Difficulty counter
+			// Difficulty counter.
 			difficultyBox = new Layout.Textbox("difficultyBox");
 			difficultyBox.percentageY = 2;
 			difficultyBox.anchor = Layout.Anchor.CenterX;
@@ -43,7 +43,9 @@ namespace Plopper.Gamestate
 		}
 
 
-		// Executed every time the gamestate is activated
+		/// <summary>
+		/// Executed every time the gamestate is activated.
+		/// </summary>
 		public override void Init()
 		{
 			base.Init();
@@ -56,32 +58,34 @@ namespace Plopper.Gamestate
 		}
 
 
-		// Updating all the content within the gamestate changing over time
+		/// <summary>
+		/// Updates all the content within the gamestate that is changing over time.
+		/// </summary>
 		public override void Update()
 		{
 			base.Update();
 
-			// Skip update, if game already ended
+			// Do nothing if the game already has ended.
 			if (victory) return;
 
-			// Maybe, a new entity spawns
+			// Maybe, a new entity spawns.
 			int x = hits;
 			difficulty = 0.5 * (10*x*x + 0.2)/(x*x + 70*x + 0.1) + Math.Cos(1.2 * Math.Sqrt(1.5*x)) + 2 * Math.Exp(-0.05*x);
 			if (random.Next(0, (int)(60 / difficulty)) == 0)
 			{
-				Entity entity = GetRandomEntity();
-				RushEntity rushEntity = new RushEntity(entity.rectangle, entity.brush, rushMap);
+				Entity.Entity entity = GetRandomEntity();
+				Entity.RushEntity rushEntity = new Entity.RushEntity(entity.rectangle, entity.brush, rushMap);
 				entities.Add(rushEntity);
 			}
 
-			// Base is beeing updated
+			// Base is updated.
 			rushMap.playerBase.Update();
 
 			// If an entity collides with the base, health is decremented
-			// Difficulty is displayed with one decimal place
+			// Difficulty is displayed with one decimal place.
 			difficultyBox.text = difficulty.ToString("F1");
 
-			// If health is 0, the game stops
+			// If health is 0, the game stops.
 			healthBar.value = rushMap.playerBase.health;
 			if(healthBar.value == 0 && !victory)
 			{
@@ -96,7 +100,7 @@ namespace Plopper.Gamestate
 		}
 
 
-		// Drawing all the content to the given graphics object
+		// Drawing all the content to the given graphics object.
 		public override void Draw(Graphics g)
 		{
 			base.Draw(g);
@@ -109,7 +113,7 @@ namespace Plopper.Gamestate
 		}
 
 		/// <summary>
-		/// Saves the score along with the typed in name in the database.
+		/// Saves the score along with the entered name in the database.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

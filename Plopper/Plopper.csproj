@@ -70,7 +70,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FormControl.cs" />
-    <Compile Include="Entity.cs" />
+    <Compile Include="Entity\Entity.cs" />
     <Compile Include="Database.cs" />
     <Compile Include="Gamestate\GameState.cs" />
     <Compile Include="Gamestate\GameStateManager.cs" />
@@ -92,9 +92,9 @@
     <Compile Include="Map\RushMap.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RushEntity.cs" />
+    <Compile Include="Entity\RushEntity.cs" />
     <Compile Include="SFXPlayer.cs" />
-    <Compile Include="TimeEntity.cs" />
+    <Compile Include="Entity\TimeEntity.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

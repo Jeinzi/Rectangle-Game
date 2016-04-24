@@ -19,7 +19,7 @@ namespace Plopper
 		/******** Functions ********/
 
 		/// <summary>
-		/// Creates a new SQLite Database within the set path in case there is none yet.
+		/// Creates a new SQLite Database within the given directory, in case there is none yet.
 		/// </summary>
 		private static void Create()
 		{
@@ -41,7 +41,7 @@ namespace Plopper
 
 		/// <summary>
 		/// Connects to the database.
-		/// If there is none, it will first be created, the connection will then be established subsequently.
+		/// If there is no database, it will be created first, the connection will then be established subsequently.
 		/// </summary>
 		/// <param name="saveDirectory">The path the database is saved in. When set to null, the last database will be used.</param>
 		public static void Connect(string saveDirectory = null)
@@ -125,7 +125,6 @@ namespace Plopper
 		{
 			SQLiteCommand command = new SQLiteCommand(query, databaseConnection);
 			return(command.ExecuteReader());
-			//command.Dispose();
 		}
 	}
 }

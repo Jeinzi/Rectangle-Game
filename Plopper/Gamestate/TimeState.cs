@@ -8,14 +8,16 @@
 			: base(gameStateManager) { }
 
 
-		// Executed every time the gamestate is activated
+		/// <summary>
+		/// Executed every time the gamestate is activated.
+		/// </summary>
 		public override void Init()
 		{
 			base.Init();
 			for(int i = 0; i < 25; i++)
 			{
-				Entity entity = GetRandomEntity();
-				TimeEntity timeEntity = new TimeEntity(entity.rectangle, entity.brush, map);
+				Entity.Entity entity = GetRandomEntity();
+				Entity.TimeEntity timeEntity = new Entity.TimeEntity(entity.rectangle, entity.brush, map);
 				entities.Add(timeEntity);
 			}
 
@@ -25,7 +27,9 @@
 		}
 
 
-		// Updating all the content within the gamestate changing over time
+		/// <summary>
+		/// Updates all the content within the gamestate that is changing over time.
+		/// </summary>
 		public override void Update()
 		{
 			base.Update();
@@ -50,7 +54,7 @@
 		}
 
 		/// <summary>
-		/// Saves the score along with the typed in name in the database.
+		/// Saves the score along with the entered name in the database.
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>

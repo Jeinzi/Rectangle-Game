@@ -5,31 +5,12 @@ using System.Windows.Forms;
 using System.Diagnostics;
 
 
-/*
- * ToDo:
- * 
- * Add OnLevelEnds event and function
- * Make adaptive
- * Add exceptions
- * Add music
- * Add List : Box
- * ~Remove multi line settings from Inputbox, maybe create new class
- * !Let boxes positioned relativly to the formular constantly adapt to screen size (make adaptive)
- * ~?Add standard username to database
- * #Add in-game stats (current shots, hits, time, points) to time mode
- * Maybe add buttons?
- * Make formular resizeable
- * Upload to github
- * Remove unnecessary using directives
- * 
- */
-
-
 namespace Plopper
 {
 	partial class Form1 : Form
 	{
 		/******** Variables ********/
+
 		private bool showDebugInfo;
 		private int fps;
 		private int requestedFps;
@@ -50,6 +31,7 @@ namespace Plopper
 
 
 		/******** Functions ********/
+
 		public Form1()
 		{
 			InitializeComponent();
@@ -57,7 +39,7 @@ namespace Plopper
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
-			// Setting size and position of formular
+			// Setting size and position of formular.
 			this.Location = new Point(0, 0);
 			this.Size = new Size(1000, 500);
 			this.WindowState = FormWindowState.Maximized;
@@ -65,7 +47,7 @@ namespace Plopper
 			formControl = new FormControl(this);
 			formControl.MaximizeForm();
 
-			// Initializing variables
+			// Initializing variables.
 			saveDirectory = Environment.GetEnvironmentVariable("USERPROFILE")
 									 + @"\AppData\Roaming\Jeinzi\Plopper\";
 			screenshotDirectory = saveDirectory + @"screenshots\";
@@ -77,11 +59,11 @@ namespace Plopper
 			backGraphics = Graphics.FromImage(backBuffer);
 			screenGraphics = this.CreateGraphics();
 
-			// Create directory structure and database
+			// Create directory structure and database.
 			CreateDirectories();
 			Database.Connect(saveDirectory);
 
-			// Starting threads
+			// Starting threads.
 			mainThread = new Thread(GameLoop);
 			mainThread.IsBackground = true;
 			mainThread.Start();
@@ -98,12 +80,12 @@ namespace Plopper
 				fpsStopwatch.Reset();
 				fpsStopwatch.Start();
 
-				// Updating und drawing game
+				// Updating und drawing the game.
 				gameStateManager.Update();
 				Render(backGraphics);
 				Display();
 
-				// FPS regulation
+				// FPS regulation.
 				fpsStopwatch.Stop();
 
 				time = (int)fpsStopwatch.ElapsedMilliseconds;
@@ -158,20 +140,20 @@ namespace Plopper
 		}
 
 		/// <summary>
-		/// Saves the current backbuffer to the screenshot save directory.
+		/// Saves the current backbuffer as a screenshot in the save directory.
 		/// </summary>
 		private void SaveScreenshot()
 		{
 			int i = 0;
 			string savePath = "";
 
-			// Search for an unused file name
+			// Search for an unused file name.
 			do
 			{
 				savePath = screenshotDirectory + "Screenshot_" + i++ + ".jpg";
 			}
 			while (System.IO.File.Exists(savePath));
-			// Save file
+			// Save file.
 			lock (backBuffer)
 			{
 				backBuffer.Save(savePath);
@@ -179,7 +161,7 @@ namespace Plopper
 		}
 
 		/// <summary>
-		/// Creates all the needed directories.
+		/// Creates all the directories needed for the game to run properly.
 		/// </summary>
 		private void CreateDirectories()
 		{
@@ -188,16 +170,19 @@ namespace Plopper
 
 
 		/******** Keyboard input ********/
-		// All the user input is directly passed to the gamestate manager,
-		// which then passes it to the currently active gamestate
+		/*
+			All the user input is directly passed to the gamestate manager,
+			which then passes it to the currently active gamestate.
+		*/
+
 
 		private void Form1_KeyDown(object sender, KeyEventArgs e)
 		{
-			// Toggle debug info, can always be activated
+			// Toggle debug info.
 			if (e.KeyCode == Keys.F1) { showDebugInfo = !showDebugInfo; }
-			// Toggle fullscreen
+			// Turn on fullscreen.
 			if (e.KeyCode == Keys.F2) { formControl.MaximizeForm(); }
-			// Screenshot
+			// Screenshot.
 			if (e.KeyCode == Keys.F3) { SaveScreenshot(); }
 
 			gameStateManager.KeyPressed(e);

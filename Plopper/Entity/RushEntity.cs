@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Drawing;
 
-namespace Plopper
+namespace Plopper.Entity
 {
 	class RushEntity : Entity
 	{
 		/******** Variables ********/
+
 		Map.RushMap rushMap;
 		
 		/******** Functions ********/
 	
 		/// <summary>
-		/// Creates a new Entity that is specialized for RushMode.
+		/// Creates a new entity that is specialized for RushMode.
 		/// </summary>
 		/// <param name="rectangle">The rectangle representing the entity.</param>
 		/// <param name="brush">The Brush to fill the entity.</param>
@@ -51,7 +52,7 @@ namespace Plopper
 		}
 
 		/// <summary>
-		/// Sets the target of the entity to a new point within the base
+		/// Sets the target of the entity to a new point within the base.
 		/// </summary>
 		private void ChangeTarget()
 		{

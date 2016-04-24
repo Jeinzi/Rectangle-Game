@@ -1,37 +1,16 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-/* TOCHTER:
- * VorVariablen: Alle Monster
- *
- * Konstruktor:
- *	this.gsm = gsm;
- *	this.player = player;
- *
- *	Variablen:
- *		DrawInventory = false, startX, startY, resetCoord = true
- *	MainTileMap = new TileMap(".txt", ".png", Tilegröße)
- *	Monster myMonster = new Monster(MainTileMap, X, Y)
- * Init()
- *	Wenn ueberschreiben, dann mit super.Init(); PositionSet Regeln mit resetCoord
- * Update()
- *	Monster.Update(); super.Update();
- * DrawMobs()
- *	Monster.Draw();
- * Draw()
- *	Wenn üeberschreiben, dann super.Draw() zuerst, sonst wird übermalt
- * KeyPressed();
- *	Wenn überschreiben, dann mit super(), das Meiste ist schon drin.
- * KeyReleased();
- *	Wenn überschreiben, dann mit super(), das Meiste ist schon drin.
- */
-
 namespace Plopper.Gamestate
 {
 	public abstract class GameState : ActiveElement
 	{
+		/**** Variables ****/
+
 	    protected GameStateManager gameStateManager;
 		protected Layout.Layout layout;
+
+		/**** Functions ****/
 
 		public GameState()
 		{
@@ -40,9 +19,7 @@ namespace Plopper.Gamestate
 
 		public virtual void Init() { }
 
-
-
-		// Calling methods of base class and calling the corrisponding layout functions
+		/**** Calling methods of base class and the corrisponding layout functions ****/
 
 		public override void Draw(Graphics g)
 		{
