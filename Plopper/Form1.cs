@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Threading;
 using System.Windows.Forms;
 using System.Diagnostics;
@@ -26,6 +20,7 @@ using System.Diagnostics;
  * Maybe add buttons?
  * Make formular resizeable
  * Upload to github
+ * Remove unnecessary using directives
  * 
  */
 
