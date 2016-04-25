@@ -62,36 +62,35 @@ namespace RectangleGame.Gamestate
 			timerLabel.borderLine = Pens.Transparent;
 			timerLabel.fill = Brushes.Transparent;
 			timerLabel.text = "Time:";
-#warning Stopped here whilst adjusting the infobox on the rightof the screen
 
 			Layout.Textbox shotCounter = new Layout.Textbox("shotCounter");
-			shotCounter.parent = statusBox;
 			shotCounter.percentageY = 30;
-			shotCounter.anchor = Layout.Anchor.CenterX;
-			shotCounter.percentageSize = new SizeF(90, 10);
+			Layout.Textbox shotCounterLabel = new Layout.Textbox("shotCounterLabel");
+			shotCounterLabel.percentageY = shotCounter.percentageY;
+			shotCounterLabel.text = "Shots:";
 
 			Layout.Textbox enemyCounter = new Layout.Textbox("enemyCounter");
-			enemyCounter.parent = statusBox;
 			enemyCounter.percentageY = 55;
-			enemyCounter.anchor = Layout.Anchor.CenterX;
-			enemyCounter.percentageSize = new SizeF(90, 10);
+			Layout.Textbox enemyCounterLabel = new Layout.Textbox("enemyCounterLabel");
+			enemyCounterLabel.percentageY = enemyCounter.percentageY;
+			enemyCounterLabel.text = "Hits:";
 
 			Layout.Textbox scoreCounter = new Layout.Textbox("scoreCounter");
-			scoreCounter.parent = statusBox;
 			scoreCounter.percentageY = 80;
-			scoreCounter.anchor = Layout.Anchor.CenterX;
-			scoreCounter.percentageSize = new SizeF(90, 10);
+			Layout.Textbox scoreCounterLabel = new Layout.Textbox("scoreCounterLabel");
+			scoreCounterLabel.percentageY = scoreCounter.percentageY;
+			scoreCounterLabel.text = "Score:";
 
 			// Adding boxes to layout.
 			layout.AddBox(statusBox);
 			layout.AddBox(timer);
 			layout.AddBox(timerLabel);
 			layout.AddBox(shotCounter);
-			//layout.AddBox(shotCounterLabel);
+			layout.AddBox(shotCounterLabel);
 			layout.AddBox(enemyCounter);
-			//layout.AddBox(enemyCounterLabel);
+			layout.AddBox(enemyCounterLabel);
 			layout.AddBox(scoreCounter);
-			//layout.AddBox(scoreCounterLabel);
+			layout.AddBox(scoreCounterLabel);
 
 			// Already setting up victory dialogue.
 #warning You may not set the relative position after setting the anchor or every child box will not show up correctly

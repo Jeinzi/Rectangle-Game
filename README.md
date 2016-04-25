@@ -1,2 +1,2 @@
 # Rectangle-Game
-A small game, primarily beeing a test for my work in progress layouting library for .NET forms
+A small game, primarily being a test for my work in progress layouting library for .NET forms

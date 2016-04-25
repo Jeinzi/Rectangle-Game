@@ -29,7 +29,6 @@ namespace RectangleGame.Layout
 
 		/******** Functions ********/
 
-		// Constructor
 		public Textbox(string text, Rectangle area, Brush fill, Pen borderLine, string identifier = "")
 			: base(area, fill, borderLine, identifier)
 		{
@@ -48,13 +47,11 @@ namespace RectangleGame.Layout
 		public Textbox(string identifier = "")
 			: this("", new Rectangle(), identifier) { }
 
-
 		// Updating the textbox
 		public override void Update()
 		{
 			base.Update();
 		}
-
 
 		// Drawing the box to the screen
 		public override void Draw(Graphics g)
