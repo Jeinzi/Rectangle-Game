@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
+using Layout;
 
 namespace RectangleGame.Gamestate
 {
@@ -18,14 +19,14 @@ namespace RectangleGame.Gamestate
 			this.gameStateManager = gameStateManager;
 
 			// Creating Layout.
-			Layout.Textbox caption = new Layout.Textbox("caption");
+			Textbox caption = new Textbox("caption");
 			caption.text = "Rectangles";
 			caption.font = new Font("ARIAL", 90);
 			caption.borderLine = new Pen(Brushes.Black, 3);
 			caption.y = 100;
 			caption.anchor = Layout.Anchor.CenterX;
 
-			Layout.Box optionBox = new Layout.Box("optionBox");
+			Box optionBox = new Box("optionBox");
 			optionBox.width = 200;
 			optionBox.height = 200;
 			optionBox.anchor = Layout.Anchor.Center;

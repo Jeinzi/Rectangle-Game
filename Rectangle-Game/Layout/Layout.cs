@@ -5,19 +5,19 @@ using System.Windows.Forms;
 
 // Represents the layout of the formular with different objects
 // such as labels, textboxes...
-namespace RectangleGame.Layout
+namespace Layout
 {
 	public class Layout : ActiveElement
 	{
 		/******** Variables ********/
-
+		
 		// Standard values for layout of the entire application
-		private static Brush _standardFill = Brushes.White;
-		private static Pen _standardBorderLine = new Pen(Brushes.Black, 2);
-		private static Brush _standardBackgroundBrush = Brushes.Teal;
-		public static Brush standardFill { get { return (_standardFill); } }
-		public static Pen standardBorderLine { get { return (_standardBorderLine); } }
-		public static Brush standardBackgroundBrush { get { return (_standardBackgroundBrush); } }
+		private static Brush _defaultFill = Brushes.White;
+		private static Pen _defaultBorderLine = new Pen(Brushes.Black, 2);
+		private static Brush _defaultBackgroundBrush = Brushes.Teal;
+		public static Brush defaultFill { get { return (_defaultFill); } }
+		public static Pen defaultBorderLine { get { return (_defaultBorderLine); } }
+		public static Brush defaultBackgroundBrush { get { return (_defaultBackgroundBrush); } }
 
 		private List<Box> boxes;
 		private Rectangle background;
@@ -25,12 +25,12 @@ namespace RectangleGame.Layout
 
 		/******** Functions ********/
 		
-		// Constructor
 		public Layout()
 		{
 			boxes = new List<Box>();
-			background = new Rectangle(new Point(), Program.mainForm.ClientSize);
-			this.backgroundBrush = standardBackgroundBrush;
+#warning Not independent of program
+			background = new Rectangle(new Point(), RectangleGame.Program.mainForm.ClientSize);
+			this.backgroundBrush = defaultBackgroundBrush;
 		}
 
 		public Layout(Brush backgroundBrush) : this()
@@ -39,7 +39,9 @@ namespace RectangleGame.Layout
 		}
 
 		
-		// Updates every element
+		/// <summary>
+		/// Updates every element within the layout.
+		/// </summary>
 		public override void Update()
 		{
 			base.Update();
@@ -50,7 +52,10 @@ namespace RectangleGame.Layout
 		}
 
 
-		// Draws the background and every element above
+		/// <summary>
+		/// Draws the background and every element within the layout.
+		/// </summary>
+		/// <param name="g"></param>
 		public override void Draw(Graphics g)
 		{
 			base.Draw(g);
@@ -61,6 +66,11 @@ namespace RectangleGame.Layout
 			}
 		}
 
+		/// <summary>
+		/// Called if a key has been pressed.
+		/// Passes this event to all elements within the layout.
+		/// </summary>
+		/// <param name="e">An object containing information about the event.</param>
 		public override void KeyPressed(KeyEventArgs e)
 		{
 			base.KeyPressed(e);
@@ -70,6 +80,11 @@ namespace RectangleGame.Layout
 			}
 		}
 
+		/// <summary>
+		/// Called, if a character on the keyboard has been pressed.
+		/// Passes this event to all elements within the layout.
+		/// </summary>
+		/// <param name="e">An object containing information about the event.</param>
 		public override void CharPressed(KeyPressEventArgs e)
 		{
 			base.CharPressed(e);
@@ -80,15 +95,21 @@ namespace RectangleGame.Layout
 		}
 
 
-		// Adds a box to the layout
+		/// <summary>
+		/// Adds a box to the layout.
+		/// </summary>
+		/// <param name="box">The box to add.</param>
 		public void AddBox(Box box)
 		{
 			boxes.Add(box);
 		}
 
 
-		// Returns a box based on a given identifier
-		// Returns null, if there is no matching box
+		/// <summary>
+		/// Returns a box based on a given identifier.
+		/// </summary>
+		/// <param name="identifier"></param>
+		/// <returns>Null, if there is no matching box.</returns>
 		public Box GetBox(string identifier)
 		{
 			if (identifier == "") return (null);
@@ -100,6 +121,11 @@ namespace RectangleGame.Layout
 			return (null);
 		}
 
+		/// <summary>
+		/// Clears the entire background.
+		/// </summary>
+		/// <param name="g">The graphics object used for rendering.</param>
+		/// <param name="brush">A color to fill the background with.</param>
 		public void Clear(Graphics g, Brush brush)
 		{
 			g.FillRectangle(brush, background);
@@ -107,6 +133,9 @@ namespace RectangleGame.Layout
 
 	}
 
+	/// <summary>
+	/// Contains predefined relative positions.
+	/// </summary>
 	[Flags]
 	public enum Anchor
 	{

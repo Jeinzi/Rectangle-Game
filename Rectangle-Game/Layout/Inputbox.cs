@@ -3,7 +3,7 @@ using System.Windows.Forms;
 using System.Diagnostics;
 using System.Drawing;
 
-namespace RectangleGame.Layout
+namespace Layout
 {
 	/// <summary>
 	/// An inputbox saving the typed chars.
@@ -12,7 +12,7 @@ namespace RectangleGame.Layout
 	{
 		/******** Variables ********/
 		/// <summary>
-		/// Internaly used random object.
+		/// Internally used random object.
 		/// </summary>
 		private Random random;
 		/// <summary>
@@ -31,10 +31,14 @@ namespace RectangleGame.Layout
 		/// The delimiter causing the call of OnDelimiterEntered.
 		/// </summary>
 		public Keys delimiter;
+		/// <summary>
+		/// The time the blinking cursor is visible/invisible.
+		/// </summary>
+		private int cursorBlinkInterval;
 
 		private Stopwatch stopwatch;
-		public bool cursor;
 		private bool cursorVisible;
+		public bool cursor;
 		public Pen cursorPen;
 
 		/// <summary>
@@ -77,7 +81,7 @@ namespace RectangleGame.Layout
 
 		/// <summary>
 		/// Indicating if the input box should have a fixed size to fit the maximum string length.
-		/// Disables Layout.Textbox.boxAdaptive.
+		/// Disables Textbox.boxAdaptive.
 		/// </summary>
 		public bool maxSize
 		{
@@ -103,8 +107,9 @@ namespace RectangleGame.Layout
 		public Inputbox(string identifier = "")
 			: base(identifier)
 		{
-			this.maxLength = 50;
-			this.delimiter = Keys.Enter;
+			maxLength = 50;
+			delimiter = Keys.Enter;
+			cursorBlinkInterval = 500;
 
 #warning Adapt to different Framerates with Update
 			random = new Random((int)DateTime.Now.Ticks);
@@ -114,27 +119,51 @@ namespace RectangleGame.Layout
 			cursor = true;
 		}
 
+		/// <summary>
+		/// Updates the Inputbox.
+		/// </summary>
 		public override void Update()
 		{
 			base.Update();
-			if (cursor && stopwatch.Elapsed.Milliseconds >= 500)
+			if (cursor && stopwatch.Elapsed.Milliseconds >= cursorBlinkInterval)
 			{
 				stopwatch.Restart();
 				cursorVisible = !cursorVisible;
 			}
 		}
 
+		/// <summary>
+		/// Renders the Inputbox to the given graphics object.
+		/// </summary>
+		/// <param name="g">The grahpics object to render the element to.</param>
 		public override void Draw(System.Drawing.Graphics g)
 		{
 			if (!visible) return;
-			// Fixing box to maximum size
+			// Fixing box to maximum size.
 			if(maxSize)
 			{
 				string temp = new string('W', maxLength);
 				AdaptToContent(g, temp);
 			}
+
+			// Disable adaptiveness of Inputbox, so the size calculated
+			// by the following call of AdaptToContent will not be overwritten
+			// in base class. This is done to get the same height as a filled Inputbox.
+			bool wasAdaptive = false;
+			if (text == "" && boxAdaptive == true)
+			{
+				boxAdaptive = false;
+				wasAdaptive = true;
+				AdaptToContent(g, ".");
+				width = 2 * padding;
+			}
 			base.Draw(g);
-			// Displaying cursor
+			if(wasAdaptive)
+			{
+				boxAdaptive = true;
+			}
+
+			// Displaying cursor.
 			if(cursorVisible)
 			{
 				Point cursorPosition = textPosition;
@@ -150,18 +179,11 @@ namespace RectangleGame.Layout
 			}
 		}
 
-		public override void CharPressed(KeyPressEventArgs e)
-		{
-			if (!visible) return;
-
-			base.CharPressed(e);
-			if (handled && text.Length < maxLength)
-			{
-				SFXPlayer.Play(Sound.Click1 + random.Next(0, 4));
-				text += e.KeyChar;
-			}
-		}
-
+		/// <summary>
+		/// Called if a key has been pressed.
+		/// Passes this event to all elements within the layout.
+		/// </summary>
+		/// <param name="e">An object containing information about the event.</param>
 		public override void KeyPressed(KeyEventArgs e)
 		{
 			if (!visible) return;
@@ -192,6 +214,23 @@ namespace RectangleGame.Layout
 			{
 				SFXPlayer.Play(Sound.Menu_Confirm);
 				if (OnDelimiterEntered != null) OnDelimiterEntered.Invoke(this, new StringEventArgs(text));
+			}
+		}
+
+		/// <summary>
+		/// Called, if a character on the keyboard has been pressed.
+		/// Passes this event to all elements within the layout.
+		/// </summary>
+		/// <param name="e">An object containing information about the event.</param>
+		public override void CharPressed(KeyPressEventArgs e)
+		{
+			if (!visible) return;
+
+			base.CharPressed(e);
+			if (handled && text.Length < maxLength)
+			{
+				SFXPlayer.Play(Sound.Click1 + random.Next(0, 4));
+				text += e.KeyChar;
 			}
 		}
 	}

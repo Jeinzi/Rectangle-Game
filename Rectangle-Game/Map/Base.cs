@@ -1,11 +1,12 @@
 ﻿using System.Drawing;
+using Layout;
 
 namespace RectangleGame.Map
 {
 	/// <summary>
 	/// A rectangular basis consisting out of an inner and an outer part.
 	/// </summary>
-	class Base : ActiveElement
+	class Base : Layout.ActiveElement
 	{
 		/******** Variables ********/
 

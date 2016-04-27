@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace RectangleGame.Layout
+namespace Layout
 {
 	/// <summary>
 	/// A simple box with a specified fill and border.
@@ -64,7 +64,7 @@ namespace RectangleGame.Layout
 		/// <param name="area">The rectangle corresponding to the box.</param>
 		/// <param name="identifier">An optional identifier to later retrieve the element.</param>
 		public Box(Rectangle area, string identifier = "")
-			: this(area, (Brush)Layout.standardFill.Clone(), (Pen)Layout.standardBorderLine.Clone(), identifier) { }
+			: this(area, (Brush)Layout.defaultFill.Clone(), (Pen)Layout.defaultBorderLine.Clone(), identifier) { }
 
 		/// <summary>
 		/// Standard constructor. Will use an empty rectangle and the standard fill and borderLine set in the Layout class.
@@ -81,14 +81,13 @@ namespace RectangleGame.Layout
 		public override void Update()
 		{
 			base.Update();
-			anchor = anchor;
 		}
 
 
 		/// <summary>
 		/// Draws the element with the given Graphics object.
 		/// </summary>
-		/// <param name="g">The Graphics object to be drawn with.</param>
+		/// <param name="g">The graphics object to be rendered to.</param>
 		public override void Draw(Graphics g)
 		{
 			if (visible)
@@ -114,7 +113,8 @@ namespace RectangleGame.Layout
 				if(_parent == null)
 				{
 					Box tempBox =  new Box("form");
-					tempBox.size = Program.mainForm.ClientSize;
+#warning Link to Program, but should be independent of software the library is used in
+					tempBox.size = RectangleGame.Program.mainForm.ClientSize;
 					return (tempBox);
 				}
 				else
@@ -125,10 +125,21 @@ namespace RectangleGame.Layout
 			set
 			{
 				_parent = value;
-				if(_parent != null)
+
+				if (_parent != null)
 				{
 					_area.X = _parent.absoluteX;
 					_area.Y = _parent.absoluteY;
+
+					// Adapt relative positioning to new parent.
+					if (anchor != Anchor.None)
+					{
+						anchor = anchor;
+					}
+					else
+					{
+						percentageLocation = percentageLocation;
+					}
 				}
 				else
 				{
@@ -163,7 +174,8 @@ namespace RectangleGame.Layout
 			set
 			{
 				_area.X = value + parent.absoluteX;
-				anchor = Anchor.None;
+				// Remove horizontal part of the anchor.
+				anchor ^= (anchor & Anchor.CenterX);
 			}
 		}
 
@@ -177,7 +189,8 @@ namespace RectangleGame.Layout
 			set
 			{
 				_area.Y = value + parent.absoluteY;
-				anchor = Anchor.None;
+				// Remove vertical part of the anchor.
+				anchor ^= (anchor & Anchor.CenterY);
 			}
 		}
 
@@ -216,7 +229,8 @@ namespace RectangleGame.Layout
 				int tempX;
 				tempX = (int)(value * parent.width / 100);
 				x = tempX;
-				anchor = Anchor.None;
+				// Remove horizontal part of the anchor.
+				anchor ^= (anchor & Anchor.CenterX);
 			}
 		}
 
@@ -237,7 +251,8 @@ namespace RectangleGame.Layout
 				int tempY;
 				tempY = (int)(value * parent.height / 100);
 				y = tempY;
-				anchor = Anchor.None;
+				// Remove vertical part of the anchor.
+				anchor ^= (anchor & Anchor.CenterY);
 			}
 		}
 
@@ -269,7 +284,8 @@ namespace RectangleGame.Layout
 			set
 			{
 				_area.X = value;
-				anchor = Anchor.None;
+				// Remove horizontal part of the anchor.
+				anchor ^= (anchor & Anchor.CenterX);
 			}
 		}
 
@@ -283,7 +299,8 @@ namespace RectangleGame.Layout
 			set
 			{
 				_area.Y = value;
-				anchor = Anchor.None;
+				// Remove vertical part of the anchor.
+				anchor ^= (anchor & Anchor.CenterY);
 			}
 		}
 
@@ -360,7 +377,6 @@ namespace RectangleGame.Layout
 				if (value < 0)
 				{
 					_relativeSize.Width = -1;
-					return;
 				}
 				else
 				{
@@ -383,7 +399,6 @@ namespace RectangleGame.Layout
 				if (value < 0)
 				{
 					_relativeSize.Height = -1;
-					return;
 				}
 				else
 				{

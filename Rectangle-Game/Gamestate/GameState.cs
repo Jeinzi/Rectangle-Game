@@ -3,7 +3,7 @@ using System.Windows.Forms;
 
 namespace RectangleGame.Gamestate
 {
-	public abstract class GameState : ActiveElement
+	public abstract class GameState : Layout.ActiveElement
 	{
 		/**** Variables ****/
 

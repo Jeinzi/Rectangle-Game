@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace RectangleGame
+namespace Layout
 {
 	///	<summary>
 	///	A class that serves as a parent for everything that recognizes user input.

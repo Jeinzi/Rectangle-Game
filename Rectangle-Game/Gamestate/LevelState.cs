@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Diagnostics;
+using Layout;
 
 namespace RectangleGame.Gamestate
 {
@@ -15,15 +16,16 @@ namespace RectangleGame.Gamestate
 		protected int shots;
 		protected int hits;
 		protected int score;
+		protected int doubleHits;
 
 		protected Stopwatch stopwatch;
 		protected Random random;
 		protected List<Entity.Entity> entities;
 		protected Map.Map map;
 
-		protected Layout.Box centerBox;
-		protected Layout.Textbox caption;
-		protected Layout.Inputbox inputBox;
+		protected Box centerBox;
+		protected Textbox caption;
+		protected Inputbox inputBox;
 
 
 		/******** Functions ********/
@@ -50,36 +52,47 @@ namespace RectangleGame.Gamestate
 			statusBox.percentageHeight = 20;
 			statusBox.percentageLocation = new PointF(89, 12.5f);
 
-			Layout.Textbox timer = new Layout.Textbox("timer");
-			timer.parent = statusBox;
-			timer.percentageY = 5;
-			timer.anchor = Layout.Anchor.Right;
-			timer.borderLine = Pens.Transparent;
-			Layout.Textbox timerLabel = new Layout.Textbox("timerLabel");
+			// Redefining textbox standards.
+			Textbox.SaveDefaultStyle();
+			Textbox.defaultAnchor = Anchor.Left;
+			Textbox.defaultBorderline = Pens.Transparent;
+			Textbox.defaultFill = Brushes.Transparent;
+
+			// Labels.
+			Textbox timerLabel = new Layout.Textbox("timerLabel");
+			Textbox shotCounterLabel = new Layout.Textbox("shotCounterLabel");
+			Textbox enemyCounterLabel = new Layout.Textbox("enemyCounterLabel");
+			Textbox scoreCounterLabel = new Layout.Textbox("scoreCounterLabel");
 			timerLabel.parent = statusBox;
+			shotCounterLabel.parent = statusBox;
+			enemyCounterLabel.parent = statusBox;
+			scoreCounterLabel.parent = statusBox;
 			timerLabel.percentageY = 5;
-			timerLabel.anchor = Layout.Anchor.Left;
-			timerLabel.borderLine = Pens.Transparent;
-			timerLabel.fill = Brushes.Transparent;
+			shotCounterLabel.percentageY = 30;
+			enemyCounterLabel.percentageY = 55;
+			scoreCounterLabel.percentageY = 80;
 			timerLabel.text = "Time:";
-
-			Layout.Textbox shotCounter = new Layout.Textbox("shotCounter");
-			shotCounter.percentageY = 30;
-			Layout.Textbox shotCounterLabel = new Layout.Textbox("shotCounterLabel");
-			shotCounterLabel.percentageY = shotCounter.percentageY;
 			shotCounterLabel.text = "Shots:";
-
-			Layout.Textbox enemyCounter = new Layout.Textbox("enemyCounter");
-			enemyCounter.percentageY = 55;
-			Layout.Textbox enemyCounterLabel = new Layout.Textbox("enemyCounterLabel");
-			enemyCounterLabel.percentageY = enemyCounter.percentageY;
 			enemyCounterLabel.text = "Hits:";
-
-			Layout.Textbox scoreCounter = new Layout.Textbox("scoreCounter");
-			scoreCounter.percentageY = 80;
-			Layout.Textbox scoreCounterLabel = new Layout.Textbox("scoreCounterLabel");
-			scoreCounterLabel.percentageY = scoreCounter.percentageY;
 			scoreCounterLabel.text = "Score:";
+
+			// Infoboxes.
+			Textbox.defaultAnchor = Anchor.Right;
+
+			Textbox timer = new Textbox("timer");
+			Textbox shotCounter = new Textbox("shotCounter");
+			Textbox enemyCounter = new Textbox("enemyCounter");
+			Textbox scoreCounter = new Textbox("scoreCounter");
+			timer.parent = statusBox;
+			shotCounter.parent = statusBox;
+			enemyCounter.parent = statusBox;
+			scoreCounter.parent = statusBox;
+			timer.percentageY = timerLabel.percentageY;
+			shotCounter.percentageY = shotCounterLabel.percentageY;
+			enemyCounter.percentageY = enemyCounterLabel.percentageY;
+			scoreCounter.percentageY = scoreCounterLabel.percentageY;
+
+			Textbox.RestoreDefaultStyle();
 
 			// Adding boxes to layout.
 			layout.AddBox(statusBox);
@@ -144,6 +157,7 @@ namespace RectangleGame.Gamestate
 			score = 0;
 			shots = 0;
 			hits = 0;
+			doubleHits = 0;
 			stopwatch.Reset();
 		}
 
@@ -157,6 +171,7 @@ namespace RectangleGame.Gamestate
 			((Layout.Textbox)layout.GetBox("timer")).text = stopwatch.Elapsed.ToString(@"m\:ss\:f");
 			((Layout.Textbox)layout.GetBox("shotCounter")).text = shots.ToString();
 			((Layout.Textbox)layout.GetBox("enemyCounter")).text = hits.ToString();
+			((Layout.Textbox)layout.GetBox("scoreCounter")).text = score.ToString();
 
 			// Updating objects
 			if (victory) return;
@@ -178,7 +193,7 @@ namespace RectangleGame.Gamestate
 		public override void Draw(Graphics g)
 		{
 			// Drawing all the objects.
-			layout.Clear(g, Layout.Layout.standardBackgroundBrush);
+			layout.Clear(g, Layout.Layout.defaultBackgroundBrush);
 			g.TranslateTransform(map.position.X, map.position.Y);
 			map.Draw(g);
 			lock (entities)
@@ -234,6 +249,10 @@ namespace RectangleGame.Gamestate
 				{
 					toBeRemoved.Add(entity);
 				}
+			}
+			if(toBeRemoved.Count > 1)
+			{
+				doubleHits = toBeRemoved.Count - 1;
 			}
 
 			// Removing the entities.

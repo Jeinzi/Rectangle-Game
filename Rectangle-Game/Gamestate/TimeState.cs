@@ -1,4 +1,7 @@
-﻿namespace RectangleGame.Gamestate
+﻿using System;
+using Layout;
+
+namespace RectangleGame.Gamestate
 {
 	class TimeState : LevelState
 	{
@@ -32,10 +35,8 @@
 		/// </summary>
 		public override void Update()
 		{
-			base.Update();
-
 			UpdateScore();
-			((Layout.Textbox)layout.GetBox("scoreCounter")).text = score.ToString();
+			base.Update();
 
 			// If there's no entity left, stop game and insert into database.
 			if (entities.Count == 0 && shots > 0 && !victory)
@@ -57,7 +58,10 @@
 		/// </summary>
 		private void UpdateScore()
 		{
-			score = ((int)(10000000 * ((float)hits / (float)shots) / (float)stopwatch.ElapsedMilliseconds));
+			//(int)Math.Pow(2, doubleHits)
+			score =(int)(10000000* (float)(hits + Math.Pow(2, doubleHits) - 1) / (float)shots / (float)stopwatch.ElapsedMilliseconds);
+			//score *= 1000000;
+
 			if (hits == 0)
 			{
 				score = 10000000;
@@ -73,6 +77,10 @@
 		{
 			base.NameEntered(sender, e);
 			string text = e.text.Trim();
+			if(text == "")
+			{
+				text = "Player";
+			}
 			Database.Query("insert into timeState (name, score) values ('" + text + "', " + score + ")");
 		}
 	}

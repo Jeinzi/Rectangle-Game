@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using Layout;
 
 namespace RectangleGame.Gamestate
 {
@@ -90,12 +91,12 @@ namespace RectangleGame.Gamestate
 			difficultyBox.text = difficulty.ToString("F1");
 
 			// If health is 0, the game stops.
+			score = (int)stopwatch.ElapsedMilliseconds;
 			healthBar.value = rushMap.playerBase.health;
 			if(healthBar.value == 0 && !victory)
 			{
 				stopwatch.Stop();
 				victory = true;
-				score = (int)stopwatch.ElapsedMilliseconds;
 				centerBox.visible = true;
 				caption.visible = true;
 				inputBox.visible = true;

@@ -49,6 +49,7 @@ namespace RectangleGame.Map
 				position.Y = Program.mainForm.ClientSize.Height / 2 - size.Height / 2;
 			}
 
+#warning Exception because pen was already being used
 			pen = new Pen(Brushes.Black, 2);
 			brush = Brushes.White;
 		}
