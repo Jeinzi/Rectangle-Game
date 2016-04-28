@@ -18,10 +18,7 @@ namespace RectangleGame.Gamestate
 
 			Layout.Inputbox box = new Layout.Inputbox("box1");
 			box.anchor = Layout.Anchor.Center;
-			//box.cursor = false;
 #warning Why does maxSize influence box height?
-#warning Fix size with empty textbox
-			//box.maxSize = true;
 			box.textAnchor = Layout.Anchor.Top | Layout.Anchor.CenterX;
 			box.OnDelimiterEntered += onEnter;
 			box.padding = 20;

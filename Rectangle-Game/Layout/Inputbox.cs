@@ -203,8 +203,9 @@ namespace Layout
 					}
 					if (e.Control) text = "";
 					break;
-				// Ignore '\r' and '\n'
+				// Ignore '\r' and '\n' and Escape
 				case Keys.Enter:
+				case Keys.Escape:
 					handled = false;
 					break;
 			}
@@ -225,7 +226,7 @@ namespace Layout
 		public override void CharPressed(KeyPressEventArgs e)
 		{
 			if (!visible) return;
-
+			
 			base.CharPressed(e);
 			if (handled && text.Length < maxLength)
 			{
