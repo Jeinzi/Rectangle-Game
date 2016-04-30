@@ -38,7 +38,7 @@ namespace Layout
 				else _padding = value;
 			}
 		}
-
+		
 		/******** Functions ********/
 
 		/// <summary>
@@ -107,6 +107,9 @@ namespace Layout
 			StringFormat format = StringFormat.GenericTypographic;
 			format.FormatFlags |= StringFormatFlags.MeasureTrailingSpaces;
 
+			textPosition = area.Location;
+			textPosition.X += padding;
+			textPosition.Y += padding;
 			SetTextAnchor(g, textAnchor);
 			g.DrawString(text, font, textBrush, textPosition, format);
 		}

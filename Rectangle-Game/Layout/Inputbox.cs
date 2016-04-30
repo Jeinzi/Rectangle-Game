@@ -169,10 +169,14 @@ namespace Layout
 				Point cursorPosition = textPosition;
 				if(text == "")
 				{
+					cursorPosition.X = absoluteX + padding;
 					cursorPosition.Y = absoluteY + padding;
 				}
-				
-				cursorPosition.X += GetTextSize(g).Width + 1;
+				else
+				{
+					cursorPosition.X += GetTextSize(g).Width + 1;
+				}
+
 				Point cursorBottomPosition = cursorPosition;
 				cursorBottomPosition.Y += height - 2 * padding;
 				g.DrawLine(cursorPen, cursorPosition, cursorBottomPosition);
